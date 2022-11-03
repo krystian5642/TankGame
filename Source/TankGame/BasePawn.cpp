@@ -19,19 +19,19 @@ ABasePawn::ABasePawn()
 	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TurretMesh"));
 	BarrelMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BarrelMesh"));
 
-	FrontWheelMesh= CreateDefaultSubobject<UStaticMeshComponent>(TEXT("FrontWheel"));
-	MiddleWheelMesh= CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MiddleWheel"));
-	BackWheelMesh= CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BackWheel"));
+	for(int i=0;i<3;i++)
+	{
+		FName Name = FName(*("Wheels" + FString::FromInt(i)));
+		UStaticMeshComponent* Wheels = CreateDefaultSubobject<UStaticMeshComponent>(Name);
+		Wheels->SetupAttachment(BaseMesh);
+		WheelMeshes.Add(Wheels);
+	}
 
 	BaseMesh->SetupAttachment(CapsuleComponent);
 	TreadMesh->SetupAttachment(BaseMesh);
 
 	TurretMesh->SetupAttachment(BaseMesh);
 	BarrelMesh->SetupAttachment(TurretMesh);
-
-	FrontWheelMesh->SetupAttachment(BaseMesh);
-	MiddleWheelMesh->SetupAttachment(BaseMesh);
-	BackWheelMesh->SetupAttachment(BaseMesh);
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Spawn Point"));
 	ProjectileSpawnPoint->SetupAttachment(BarrelMesh);

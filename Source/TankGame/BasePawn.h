@@ -39,13 +39,7 @@ private:
 	UStaticMeshComponent* BarrelMesh;
 
 	UPROPERTY(VisibleAnywhere,Category="Tank Component")
-	UStaticMeshComponent* FrontWheelMesh;
-
-	UPROPERTY(VisibleAnywhere,Category="Tank Component")
-	UStaticMeshComponent* MiddleWheelMesh;
-
-	UPROPERTY(VisibleAnywhere,Category="Tank Component")
-	UStaticMeshComponent* BackWheelMesh;
+	TArray<UStaticMeshComponent*> WheelMeshes;
 
 	UPROPERTY(VisibleAnywhere,Category="Tank Component")
 	UStaticMeshComponent* TreadMesh;
