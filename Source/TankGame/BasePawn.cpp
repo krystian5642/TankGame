@@ -49,7 +49,7 @@ void ABasePawn::BeginPlay()
 void ABasePawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	RotateWheels(DeltaTime);
 }
 
 // Called to bind functionality to input
@@ -57,4 +57,12 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void ABasePawn::RotateWheels(float DeltaTime)
+{
+	for(UStaticMeshComponent* Wheel : WheelMeshes)
+	{
+		Wheel->AddLocalRotation(FRotator(200,0,0) * DeltaTime);
+	}
 }
