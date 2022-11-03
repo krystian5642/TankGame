@@ -3,6 +3,7 @@
 
 #include "BasePawn.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -52,17 +53,12 @@ void ABasePawn::Tick(float DeltaTime)
 	RotateWheels(DeltaTime);
 }
 
-// Called to bind functionality to input
-void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-
 void ABasePawn::RotateWheels(float DeltaTime)
 {
 	for(UStaticMeshComponent* Wheel : WheelMeshes)
 	{
-		Wheel->AddLocalRotation(FRotator(200,0,0) * DeltaTime);
+		FVector WheelSize = Wheel->Bounds.GetBox().GetSize();
+		FRotator WheelRotation = FRotator(TankSpeed/(WheelSize.Z/2),0,0) * DeltaTime;
+		Wheel->AddLocalRotation(WheelRotation);
 	}
 }
