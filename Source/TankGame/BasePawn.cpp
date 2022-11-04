@@ -4,6 +4,7 @@
 #include "BasePawn.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Math/UnrealMathUtility.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -50,15 +51,21 @@ void ABasePawn::BeginPlay()
 void ABasePawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	RotateWheels(DeltaTime);
+
 }
 
-void ABasePawn::RotateWheels(float DeltaTime)
+void ABasePawn::RotateWheels(float DeltaTime,float AxisValue)
 {
+	if(!AxisValue)
+	{
+		return;
+	}
 	for(UStaticMeshComponent* Wheel : WheelMeshes)
 	{
 		FVector WheelSize = Wheel->Bounds.GetBox().GetSize();
-		FRotator WheelRotation = FRotator(TankSpeed/(WheelSize.Z/2),0,0) * DeltaTime;
+		float WheelRadius = WheelSize.Z/2;
+		FRotator WheelRotation = FRotator(TankSpeed/WheelRadius,0,0) * -1 * AxisValue * DeltaTime;
+		WheelRotation=FMath::RadiansToDegrees(WheelRotation);
 		Wheel->AddLocalRotation(WheelRotation);
 	}
 }

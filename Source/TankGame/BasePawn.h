@@ -21,10 +21,10 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	void RotateWheels(float DeltaTime);
+	void RotateWheels(float DeltaTime,float AxisValue);
 
 	UPROPERTY(EditAnywhere,Category = "Movement")
-	float TankSpeed = 8400;
+	float TankSpeed = 1500;    // px/s
 
 private:
 	UPROPERTY(VisibleAnywhere)

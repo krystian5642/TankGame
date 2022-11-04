@@ -40,6 +40,7 @@ void APlayableTank::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 void APlayableTank::Move(float AxisValue)
 {
-    FVector LocalOffset =-1 *  FVector(TankSpeed,0,0) * AxisValue * UGameplayStatics::GetWorldDeltaSeconds(this);
+    FVector LocalOffset = FVector(TankSpeed,0,0) * AxisValue * UGameplayStatics::GetWorldDeltaSeconds(this);
     AddActorLocalOffset(LocalOffset);
+    RotateWheels(UGameplayStatics::GetWorldDeltaSeconds(this),AxisValue);
 }
