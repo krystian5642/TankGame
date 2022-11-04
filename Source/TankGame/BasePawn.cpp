@@ -54,18 +54,43 @@ void ABasePawn::Tick(float DeltaTime)
 
 }
 
-void ABasePawn::RotateWheels(float DeltaTime,float AxisValue)
+void ABasePawn::Move(float AxisValue)
 {
-	if(!AxisValue)
-	{
-		return;
-	}
+	FVector LocalOffset = FVector(TankSpeed,0,0) * AxisValue * UGameplayStatics::GetWorldDeltaSeconds(this);
+    AddActorLocalOffset(LocalOffset,true);
+    RotateWheels(AxisValue);
+	MovementDirection = AxisValue;
+}
+
+void ABasePawn::RotateWheels(float AxisValue)
+{
 	for(UStaticMeshComponent* Wheel : WheelMeshes)
 	{
 		FVector WheelSize = Wheel->Bounds.GetBox().GetSize();
 		float WheelRadius = WheelSize.Z/2;
-		FRotator WheelRotation = FRotator(TankSpeed/WheelRadius,0,0) * -1 * AxisValue * DeltaTime;
+		FRotator WheelRotation = FRotator(TankSpeed/WheelRadius,0,0) * -1 * AxisValue * UGameplayStatics::GetWorldDeltaSeconds(this);
 		WheelRotation=FMath::RadiansToDegrees(WheelRotation);
 		Wheel->AddLocalRotation(WheelRotation);
 	}
+}
+
+void ABasePawn::Turn(float AxisValue)
+{
+	FRotator AddRotation;
+	if(MovementDirection)
+	{
+		AddRotation= FRotator(0,RotationSpeed,0) * AxisValue * MovementDirection* 
+		UGameplayStatics::GetWorldDeltaSeconds(this);
+	}
+	else
+	{
+		AddRotation= FRotator(0,RotationSpeed,0) * AxisValue * 
+		UGameplayStatics::GetWorldDeltaSeconds(this);
+	}
+	AddActorLocalRotation(AddRotation,true);
+}
+
+void ABasePawn::TurretRotationAt(const FVector& LookAtDirection)
+{
+	
 }

@@ -5,6 +5,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Components/InputComponent.h"
+#include "DrawDebugHelpers.h"
 
 APlayableTank::APlayableTank()
 {
@@ -19,13 +21,14 @@ void APlayableTank::BeginPlay()
 {
     Super::BeginPlay();
 
+    PlayerController = Cast<APlayerController>(GetController());
 
 }
 
 void APlayableTank::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-
+    ControlTurret();
 
 
 }
@@ -35,12 +38,22 @@ void APlayableTank::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
     PlayerInputComponent->BindAxis(TEXT("Forward"),this,&APlayableTank::Move);
+    PlayerInputComponent->BindAxis(TEXT("Turn"),this,&APlayableTank::Turn);
 
 }
 
-void APlayableTank::Move(float AxisValue)
+void APlayableTank::ControlTurret()
 {
-    FVector LocalOffset = FVector(TankSpeed,0,0) * AxisValue * UGameplayStatics::GetWorldDeltaSeconds(this);
-    AddActorLocalOffset(LocalOffset);
-    RotateWheels(UGameplayStatics::GetWorldDeltaSeconds(this),AxisValue);
+    if(PlayerController)
+    {
+        FHitResult HitByCursor;
+        PlayerController->GetHitResultUnderCursor
+        (
+            ECollisionChannel::ECC_Visibility,
+            false,
+            HitByCursor
+        );
+        DrawDebugSphere(GetWorld(),HitByCursor.ImpactPoint,100,20,FColor::Red,false);
+        TurretRotationAt(HitByCursor.ImpactPoint);
+    }
 }

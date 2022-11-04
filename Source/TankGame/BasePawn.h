@@ -21,10 +21,16 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	void RotateWheels(float DeltaTime,float AxisValue);
+	void RotateWheels(float AxisValue);
+	void Move(float AxisValue);
+	void Turn(float AxisValue);
+	void TurretRotationAt(const FVector& LookAtDirection);
 
 	UPROPERTY(EditAnywhere,Category = "Movement")
 	float TankSpeed = 1500;    // px/s
+
+	UPROPERTY(EditAnywhere,Category = "Movement")
+	float RotationSpeed = 55;  // deg/s
 
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -47,6 +53,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere,Category="Tank Component");
 	USceneComponent* ProjectileSpawnPoint;
+
+	int MovementDirection  =0;
 
 public:	
 	// Called every frame

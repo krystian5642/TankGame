@@ -8,6 +8,7 @@
 
 class USpringArmComponent;
 class UCameraComponent;
+class APlayerController;
 
 UCLASS()
 class TANKGAME_API APlayableTank : public ABasePawn
@@ -28,13 +29,15 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void Move(float AxisValue);
-
 private:
 	UPROPERTY(VisibleAnywhere,Category = "Object Components")
 	USpringArmComponent* SpringArm;
 
 	UPROPERTY(VisibleAnywhere,Category = "Object Components")
 	UCameraComponent* Camera;
+
+	APlayerController* PlayerController;
+
+	void ControlTurret();
 	
 };
