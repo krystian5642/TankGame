@@ -79,12 +79,12 @@ void ABasePawn::Turn(float AxisValue)
 	FRotator AddRotation;
 	if(MovementDirection)
 	{
-		AddRotation= FRotator(0,RotationSpeed,0) * AxisValue * MovementDirection* 
+		AddRotation= FRotator(0,TurnSpeed,0) * AxisValue * MovementDirection* 
 		UGameplayStatics::GetWorldDeltaSeconds(this);
 	}
 	else
 	{
-		AddRotation= FRotator(0,RotationSpeed,0) * AxisValue * 
+		AddRotation= FRotator(0,TurnSpeed,0) * AxisValue * 
 		UGameplayStatics::GetWorldDeltaSeconds(this);
 	}
 	AddActorLocalRotation(AddRotation,true);
@@ -92,5 +92,17 @@ void ABasePawn::Turn(float AxisValue)
 
 void ABasePawn::TurretRotationAt(const FVector& LookAtDirection)
 {
-	
+	FVector Direction = LookAtDirection - TurretMesh->GetComponentLocation();
+	FRotator RotateToTarget(0,Direction.Rotation().Yaw,0);
+	TurretMesh->SetWorldRotation
+	(
+		FMath::RInterpTo
+			(
+				TurretMesh->GetComponentRotation(),
+				RotateToTarget,
+				UGameplayStatics::GetWorldDeltaSeconds(this),
+				TurretInterpSpeed
+			)
+	);
+
 }

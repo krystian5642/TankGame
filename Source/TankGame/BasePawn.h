@@ -27,10 +27,15 @@ protected:
 	void TurretRotationAt(const FVector& LookAtDirection);
 
 	UPROPERTY(EditAnywhere,Category = "Movement")
-	float TankSpeed = 1500;    // px/s
+	float TankSpeed = 1500;
 
 	UPROPERTY(EditAnywhere,Category = "Movement")
-	float RotationSpeed = 55;  // deg/s
+	float TurnSpeed = 55;
+
+	UPROPERTY(EditAnywhere)
+	float TurretInterpSpeed = 1;
+
+
 
 private:
 	UPROPERTY(VisibleAnywhere)
