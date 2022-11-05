@@ -40,6 +40,7 @@ void APlayableTank::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
     PlayerInputComponent->BindAxis(TEXT("Forward"),this,&APlayableTank::Move);
     PlayerInputComponent->BindAxis(TEXT("Turn"),this,&APlayableTank::Turn);
 
+    PlayerInputComponent->BindAction(TEXT("Fire"),IE_Pressed,this,&APlayableTank::Fire);
 }
 
 void APlayableTank::ControlTurret()

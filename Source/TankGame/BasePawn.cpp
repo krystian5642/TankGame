@@ -5,6 +5,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/UnrealMathUtility.h"
+#include "Projectile.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -104,5 +105,20 @@ void ABasePawn::TurretRotationAt(const FVector& LookAtDirection)
 				TurretInterpSpeed
 			)
 	);
+}
 
+void ABasePawn::Fire()
+{
+	if(Projectile)
+	{
+		AProjectile* ProjectileSpawned = GetWorld()->SpawnActor<AProjectile>
+		(
+			Projectile,
+			ProjectileSpawnPoint->GetComponentTransform()
+		);
+		if(ProjectileSpawned)
+		{
+			ProjectileSpawned->SetOwner(this);
+		}
+	}	
 }

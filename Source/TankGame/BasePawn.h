@@ -7,6 +7,7 @@
 #include "BasePawn.generated.h"
 
 class UCapsuleComponent;
+class AProjectile;
 
 UCLASS()
 class TANKGAME_API ABasePawn : public APawn
@@ -25,6 +26,7 @@ protected:
 	void Move(float AxisValue);
 	void Turn(float AxisValue);
 	void TurretRotationAt(const FVector& LookAtDirection);
+	void Fire();
 
 	UPROPERTY(EditAnywhere,Category = "Movement")
 	float TankSpeed = 1500;
@@ -34,8 +36,6 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	float TurretInterpSpeed = 1;
-
-
 
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -58,6 +58,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere,Category="Tank Component");
 	USceneComponent* ProjectileSpawnPoint;
+
+	UPROPERTY(EditDefaultsOnly,Category = "Combat")
+	TSubclassOf<AProjectile> Projectile;
 
 	int MovementDirection  =0;
 
