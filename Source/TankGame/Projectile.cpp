@@ -3,6 +3,8 @@
 
 #include "Projectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystem.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -23,7 +25,11 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	if(FireExplosion)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(this,FireExplosion,
+		GetActorLocation(),GetActorRotation());
+	}
 }
 
 // Called every frame

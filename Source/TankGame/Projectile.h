@@ -7,6 +7,7 @@
 #include "Projectile.generated.h"
 
 class UProjectileMovementComponent;
+class UParticleSystem;
 
 UCLASS()
 class TANKGAME_API AProjectile : public AActor
@@ -28,6 +29,9 @@ public:
 private:
 	UPROPERTY(EditDefaultsOnly,Category="Combat")
 	UStaticMeshComponent* ProjectileMesh;
+
+	UPROPERTY(EditAnywhere, Category="Combat")
+	UParticleSystem* FireExplosion;
 
 	UPROPERTY(VisibleAnywhere,Category = "Movement")
 	UProjectileMovementComponent* MovementComponent;
