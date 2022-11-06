@@ -4,19 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "BasePawn.generated.h"
+#include "Tank.generated.h"
 
 class UCapsuleComponent;
 class AProjectile;
 
 UCLASS()
-class TANKGAME_API ABasePawn : public APawn
+class TANKGAME_API ATank : public APawn
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this pawn's properties
-	ABasePawn();
+	ATank();
 
 protected:
 	// Called when the game starts or when spawned
@@ -36,6 +36,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	float TurretInterpSpeed = 1;
+
+	UPROPERTY(EditAnywhere)
+	float ReloadingTime = 2;
 
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -63,6 +66,10 @@ private:
 	TSubclassOf<AProjectile> Projectile;
 
 	int MovementDirection  =0;
+
+	FTimerHandle ReloadTimer;
+	bool IsReloaded = false;
+	void Reload();
 
 public:	
 	// Called every frame

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BasePawn.h"
+#include "Tank.h"
 #include "PlayableTank.generated.h"
 
 class USpringArmComponent;
@@ -11,7 +11,7 @@ class UCameraComponent;
 class APlayerController;
 
 UCLASS()
-class TANKGAME_API APlayableTank : public ABasePawn
+class TANKGAME_API APlayableTank : public ATank
 {
 	GENERATED_BODY()
 

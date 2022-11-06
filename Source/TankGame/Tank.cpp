@@ -1,14 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BasePawn.h"
+#include "Tank.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/UnrealMathUtility.h"
 #include "Projectile.h"
+#include "TimerManager.h"
 
 // Sets default values
-ABasePawn::ABasePawn()
+ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -42,20 +43,20 @@ ABasePawn::ABasePawn()
 }
 
 // Called when the game starts or when spawned
-void ABasePawn::BeginPlay()
+void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	GetWorldTimerManager().SetTimer(ReloadTimer,this,&ATank::Reload,ReloadingTime,false);
 }
 
 // Called every frame
-void ABasePawn::Tick(float DeltaTime)
+void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
-void ABasePawn::Move(float AxisValue)
+void ATank::Move(float AxisValue)
 {
 	FVector LocalOffset = FVector(TankSpeed,0,0) * AxisValue * UGameplayStatics::GetWorldDeltaSeconds(this);
     AddActorLocalOffset(LocalOffset,true);
@@ -63,7 +64,7 @@ void ABasePawn::Move(float AxisValue)
 	MovementDirection = AxisValue;
 }
 
-void ABasePawn::RotateWheels(float AxisValue)
+void ATank::RotateWheels(float AxisValue)
 {
 	for(UStaticMeshComponent* Wheel : WheelMeshes)
 	{
@@ -75,7 +76,7 @@ void ABasePawn::RotateWheels(float AxisValue)
 	}
 }
 
-void ABasePawn::Turn(float AxisValue)
+void ATank::Turn(float AxisValue)
 {
 	FRotator AddRotation;
 	if(MovementDirection)
@@ -91,7 +92,7 @@ void ABasePawn::Turn(float AxisValue)
 	AddActorLocalRotation(AddRotation,true);
 }
 
-void ABasePawn::TurretRotationAt(const FVector& LookAtDirection)
+void ATank::TurretRotationAt(const FVector& LookAtDirection)
 {
 	FVector Direction = LookAtDirection - TurretMesh->GetComponentLocation();
 	FRotator RotateToTarget(0,Direction.Rotation().Yaw,0);
@@ -107,9 +108,9 @@ void ABasePawn::TurretRotationAt(const FVector& LookAtDirection)
 	);
 }
 
-void ABasePawn::Fire()
+void ATank::Fire()
 {
-	if(Projectile)
+	if(Projectile && IsReloaded)
 	{
 		AProjectile* ProjectileSpawned = GetWorld()->SpawnActor<AProjectile>
 		(
@@ -119,6 +120,14 @@ void ABasePawn::Fire()
 		if(ProjectileSpawned)
 		{
 			ProjectileSpawned->SetOwner(this);
+			IsReloaded = false;
+			GetWorldTimerManager().SetTimer(ReloadTimer,this,&ATank::Reload,ReloadingTime,false);
 		}
 	}	
+}
+
+void ATank::Reload()
+{
+	IsReloaded = true;
+	GetWorldTimerManager().ClearTimer(ReloadTimer);
 }
