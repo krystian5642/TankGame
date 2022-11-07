@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "HealthComponent.generated.h"
 
+class AController;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TANKGAME_API UHealthComponent : public UActorComponent
@@ -20,11 +21,22 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+private:
 	UPROPERTY(EditAnywhere)
 	float MaxHealth = 100;
 
 	UPROPERTY(VisibleAnywhere)
 	float CurrentHealth = 0;
+
+	void DamegeTaken
+	(
+		AActor* DamagedActor,
+		float Damage,
+		const UDamageType* 
+		DamageType,
+		AController* Instigator,
+		AActor* DamageCauser
+	);
 
 public:	
 	// Called every frame

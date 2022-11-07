@@ -20,6 +20,8 @@ void UHealthComponent::BeginPlay()
 	Super::BeginPlay();
 
 	CurrentHealth = MaxHealth;
+
+	GetOwner()->OnTakeAnyDamage.AddDynamic(this,&UHealthComponent::DamegeTaken);
 	
 }
 
@@ -30,5 +32,15 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UHealthComponent::DamegeTaken(AActor* DamagedActor,float Damage,const UDamageType* 
+	DamageType,AController* Instigator,AActor* DamageCauser)
+{
+	if(Damage>0)
+	{
+		CurrentHealth-=Damage;
+	}
+
 }
 
