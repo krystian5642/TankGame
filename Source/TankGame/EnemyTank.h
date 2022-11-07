@@ -24,6 +24,11 @@ protected:
 
 	APlayableTank* PlayerTank;
 
+	UPROPERTY(EditAnywhere,Category="Combat")
+	float TankFireRange =6000; 
+
+	bool IsPlayerInRange();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

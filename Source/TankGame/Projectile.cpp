@@ -15,8 +15,8 @@ AProjectile::AProjectile()
 	RootComponent = ProjectileMesh;
 
 	MovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("MovementComponent"));;
-	MovementComponent->MaxSpeed = 3000;
-	MovementComponent->InitialSpeed = 2000.f;
+	MovementComponent->MaxSpeed = 6000;
+	MovementComponent->InitialSpeed = 5000.f;
 
 
 }
@@ -46,6 +46,16 @@ void AProjectile::Tick(float DeltaTime)
 void AProjectile::OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor,
 	UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
 {	
-	UE_LOG(LogTemp,Display,TEXT("%s  %s  %s"),*HitComp->GetName(),*OtherActor->GetName(),*OtherComp->GetName());
+	//UE_LOG(LogTemp,Display,TEXT("%s  %s  %s"),
+	//*HitComp->GetName(),*OtherActor->GetName(),*OtherComp->GetName());
+
+	AActor* MyOwner = GetOwner();
+	if(MyOwner != nullptr && OtherActor && OtherActor!=this && OtherActor!=MyOwner)
+	{
+		AController* MyOwnerInstigator = MyOwner->GetInstigatorController();
+		UClass* DamageTypeClass = UDamageType::StaticClass();
+		UGameplayStatics::ApplyDamage(OtherActor,Damage,MyOwnerInstigator,this,DamageTypeClass);
+	}
+	Destroy();
 }
 

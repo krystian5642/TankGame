@@ -8,6 +8,7 @@
 
 class UCapsuleComponent;
 class AProjectile;
+class UHealthComponent;
 
 UCLASS()
 class TANKGAME_API ABaseTank : public APawn
@@ -39,7 +40,7 @@ protected:
 	float ReloadingTime = 2;
 
 	int MovementDirection  =0;
-
+	
 private:
 	UPROPERTY(VisibleAnywhere)
 	UCapsuleComponent* CapsuleComponent;
@@ -61,6 +62,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere,Category="Tank Component");
 	USceneComponent* ProjectileSpawnPoint;
+
+	UPROPERTY(VisibleAnywhere,Category="Tank Component")
+	UHealthComponent* Health;
 
 	UPROPERTY(EditDefaultsOnly,Category = "Combat")
 	TSubclassOf<AProjectile> Projectile;

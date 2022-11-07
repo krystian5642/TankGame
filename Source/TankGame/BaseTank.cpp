@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Math/UnrealMathUtility.h"
 #include "Projectile.h"
+#include "HealthComponent.h"
 #include "TimerManager.h"
 
 // Sets default values
@@ -22,6 +23,7 @@ ABaseTank::ABaseTank()
 	TreadMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TreadMesh"));
 	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TurretMesh"));
 	BarrelMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BarrelMesh"));
+	Health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
 
 	for(int i=0;i<3;i++)
 	{

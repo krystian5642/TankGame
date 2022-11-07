@@ -24,6 +24,11 @@ void AEnemyTank::Tick(float DeltaTime)
     {
         LookForPlayer();
     }
+    if(IsPlayerInRange())
+    {
+        UE_LOG(LogTemp,Display,TEXT("SDSd"));
+        Fire();
+    }
 }
 
 void AEnemyTank::LookForPlayer()
@@ -31,3 +36,25 @@ void AEnemyTank::LookForPlayer()
     FVector PlayerLocation = PlayerTank->GetActorLocation();
     TurretRotationAt(PlayerLocation);
 }
+
+bool AEnemyTank::IsPlayerInRange()
+{   
+    if(PlayerTank)
+    {
+        UE_LOG(LogTemp,Display,TEXT("%f"),FVector::Distance(PlayerTank->GetActorLocation(),GetActorLocation()))
+        if(TankFireRange >=FVector::Distance(PlayerTank->GetActorLocation(),GetActorLocation()))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        return false;
+    }
+    
+}
+    
