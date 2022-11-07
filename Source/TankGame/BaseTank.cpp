@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Tank.h"
+#include "BaseTank.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/UnrealMathUtility.h"
@@ -9,7 +9,7 @@
 #include "TimerManager.h"
 
 // Sets default values
-ATank::ATank()
+ABaseTank::ABaseTank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -43,28 +43,20 @@ ATank::ATank()
 }
 
 // Called when the game starts or when spawned
-void ATank::BeginPlay()
+void ABaseTank::BeginPlay()
 {
 	Super::BeginPlay();
-	GetWorldTimerManager().SetTimer(ReloadTimer,this,&ATank::Reload,ReloadingTime,false);
+	GetWorldTimerManager().SetTimer(ReloadTimer,this,&ABaseTank::Reload,ReloadingTime,false);
 }
 
 // Called every frame
-void ATank::Tick(float DeltaTime)
+void ABaseTank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
-void ATank::Move(float AxisValue)
-{
-	FVector LocalOffset = FVector(TankSpeed,0,0) * AxisValue * UGameplayStatics::GetWorldDeltaSeconds(this);
-    AddActorLocalOffset(LocalOffset,true);
-    RotateWheels(AxisValue);
-	MovementDirection = AxisValue;
-}
-
-void ATank::RotateWheels(float AxisValue)
+void ABaseTank::RotateWheels(float AxisValue)
 {
 	for(UStaticMeshComponent* Wheel : WheelMeshes)
 	{
@@ -76,23 +68,7 @@ void ATank::RotateWheels(float AxisValue)
 	}
 }
 
-void ATank::Turn(float AxisValue)
-{
-	FRotator AddRotation;
-	if(MovementDirection)
-	{
-		AddRotation= FRotator(0,TurnSpeed,0) * AxisValue * MovementDirection* 
-		UGameplayStatics::GetWorldDeltaSeconds(this);
-	}
-	else
-	{
-		AddRotation= FRotator(0,TurnSpeed,0) * AxisValue * 
-		UGameplayStatics::GetWorldDeltaSeconds(this);
-	}
-	AddActorLocalRotation(AddRotation,true);
-}
-
-void ATank::TurretRotationAt(const FVector& LookAtDirection)
+void ABaseTank::TurretRotationAt(const FVector& LookAtDirection)
 {
 	FVector Direction = LookAtDirection - TurretMesh->GetComponentLocation();
 	FRotator RotateToTarget(0,Direction.Rotation().Yaw,0);
@@ -108,7 +84,7 @@ void ATank::TurretRotationAt(const FVector& LookAtDirection)
 	);
 }
 
-void ATank::Fire()
+void ABaseTank::Fire()
 {
 	if(Projectile && IsReloaded)
 	{
@@ -121,12 +97,12 @@ void ATank::Fire()
 		{
 			ProjectileSpawned->SetOwner(this);
 			IsReloaded = false;
-			GetWorldTimerManager().SetTimer(ReloadTimer,this,&ATank::Reload,ReloadingTime,false);
+			GetWorldTimerManager().SetTimer(ReloadTimer,this,&ABaseTank::Reload,ReloadingTime,false);
 		}
 	}	
 }
 
-void ATank::Reload()
+void ABaseTank::Reload()
 {
 	IsReloaded = true;
 	GetWorldTimerManager().ClearTimer(ReloadTimer);

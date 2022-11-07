@@ -58,3 +58,23 @@ void APlayableTank::ControlTurret()
         TurretRotationAt(HitByCursor.ImpactPoint);
     }
 }
+
+void APlayableTank::Move(float AxisValue)
+{
+	FVector LocalOffset = FVector(TankSpeed,0,0) * AxisValue * UGameplayStatics::GetWorldDeltaSeconds(this);
+	AddActorLocalOffset(LocalOffset,true);
+    RotateWheels(AxisValue);
+	MovementDirection = AxisValue;
+}
+
+void APlayableTank::Turn(float AxisValue)
+{
+	FRotator AddRotation=FRotator(0,TurnSpeed,0) * AxisValue * 
+	UGameplayStatics::GetWorldDeltaSeconds(this);
+	if(MovementDirection)
+	{
+		AddRotation*=MovementDirection;
+		
+	}
+	AddActorLocalRotation(AddRotation,true);
+}

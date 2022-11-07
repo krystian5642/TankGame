@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Tank.h"
+#include "BaseTank.h"
 #include "PlayableTank.generated.h"
 
 class USpringArmComponent;
@@ -11,7 +11,7 @@ class UCameraComponent;
 class APlayerController;
 
 UCLASS()
-class TANKGAME_API APlayableTank : public ATank
+class TANKGAME_API APlayableTank : public ABaseTank
 {
 	GENERATED_BODY()
 
@@ -21,6 +21,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	void Move(float AxisValue);
+	void Turn(float AxisValue);
 
 public:	
 	// Called every frame
