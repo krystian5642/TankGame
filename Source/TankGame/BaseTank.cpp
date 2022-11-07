@@ -109,3 +109,8 @@ void ABaseTank::Reload()
 	IsReloaded = true;
 	GetWorldTimerManager().ClearTimer(ReloadTimer);
 }
+
+void ABaseTank::Death()
+{
+	//sounds and effects
+}

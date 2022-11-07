@@ -4,9 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "FightAndWinGameMode.h"
 #include "HealthComponent.generated.h"
 
 class AController;
+class AFightAndWinGameMode;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TANKGAME_API UHealthComponent : public UActorComponent
@@ -21,6 +23,9 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	AFightAndWinGameMode* GameMode;
+
+
 private:
 	UPROPERTY(EditAnywhere)
 	float MaxHealth = 100;
@@ -28,7 +33,8 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	float CurrentHealth = 0;
 
-	void DamegeTaken
+	UFUNCTION()
+	void DamageTaken
 	(
 		AActor* DamagedActor,
 		float Damage,

@@ -54,7 +54,7 @@ void APlayableTank::ControlTurret()
             false,
             HitByCursor
         );
-        DrawDebugSphere(GetWorld(),HitByCursor.ImpactPoint,100,20,FColor::Red,false);
+        DrawDebugSphere(GetWorld(),HitByCursor.ImpactPoint,100,20,FColor::Blue,false);
         TurretRotationAt(HitByCursor.ImpactPoint);
     }
 }
@@ -77,4 +77,11 @@ void APlayableTank::Turn(float AxisValue)
 		
 	}
 	AddActorLocalRotation(AddRotation,true);
+}
+
+void APlayableTank::Death()
+{
+    Super::Death();
+    SetActorHiddenInGame(true);
+    SetActorTickEnabled(false);
 }

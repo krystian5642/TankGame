@@ -54,7 +54,14 @@ void AProjectile::OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor,
 	{
 		AController* MyOwnerInstigator = MyOwner->GetInstigatorController();
 		UClass* DamageTypeClass = UDamageType::StaticClass();
-		UGameplayStatics::ApplyDamage(OtherActor,Damage,MyOwnerInstigator,this,DamageTypeClass);
+		UGameplayStatics::ApplyDamage
+		(
+			OtherActor,
+			Damage,
+			MyOwnerInstigator,
+			this,
+			DamageTypeClass
+		);
 	}
 	Destroy();
 }

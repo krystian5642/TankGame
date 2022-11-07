@@ -26,7 +26,6 @@ void AEnemyTank::Tick(float DeltaTime)
     }
     if(IsPlayerInRange())
     {
-        UE_LOG(LogTemp,Display,TEXT("SDSd"));
         Fire();
     }
 }
@@ -41,20 +40,18 @@ bool AEnemyTank::IsPlayerInRange()
 {   
     if(PlayerTank)
     {
-        UE_LOG(LogTemp,Display,TEXT("%f"),FVector::Distance(PlayerTank->GetActorLocation(),GetActorLocation()))
-        if(TankFireRange >=FVector::Distance(PlayerTank->GetActorLocation(),GetActorLocation()))
+        if(TankFireRange >=FVector::Distance(PlayerTank->GetActorLocation(),GetActorLocation())
+        && !PlayerTank->IsHidden())
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
     }
-    else
-    {
-        return false;
-    }
-    
+    return false;
+}
+
+void AEnemyTank::Death()
+{
+    Super::Death();
+    Destroy();
 }
     
