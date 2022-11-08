@@ -8,6 +8,7 @@
 #include "Projectile.h"
 #include "HealthComponent.h"
 #include "TimerManager.h"
+#include "Sound/SoundBase.h"
 
 // Sets default values
 ABaseTank::ABaseTank()
@@ -100,6 +101,10 @@ void ABaseTank::Fire()
 			ProjectileSpawned->SetOwner(this);
 			IsReloaded = false;
 			GetWorldTimerManager().SetTimer(ReloadTimer,this,&ABaseTank::Reload,ReloadingTime,false);
+			if(FireSound)
+			{
+				UGameplayStatics::PlaySoundAtLocation(this,FireSound,ProjectileSpawnPoint->GetComponentLocation());
+			}
 		}
 	}	
 }

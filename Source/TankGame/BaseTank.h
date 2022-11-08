@@ -9,6 +9,7 @@
 class UCapsuleComponent;
 class AProjectile;
 class UHealthComponent;
+class USoundBase;
 
 UCLASS()
 class TANKGAME_API ABaseTank : public APawn
@@ -68,6 +69,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly,Category = "Combat")
 	TSubclassOf<AProjectile> Projectile;
+
+	UPROPERTY(EditAnywhere, Category="Combat")
+	USoundBase* FireSound;
 
 	FTimerHandle ReloadTimer;
 	bool IsReloaded = false;
