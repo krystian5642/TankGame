@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "FightAndWinGameMode.h"
 #include "BaseTank.generated.h"
 
 class UCapsuleComponent;
@@ -41,6 +42,8 @@ protected:
 	float ReloadingTime = 2;
 
 	int MovementDirection  =0;
+
+	AFightAndWinGameMode* GameMode;
 	
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -76,6 +79,7 @@ private:
 	FTimerHandle ReloadTimer;
 	bool IsReloaded = false;
 	void Reload();
+	bool StartReload = false;
 
 public:	
 	// Called every frame

@@ -28,9 +28,10 @@ void APlayableTank::BeginPlay()
 void APlayableTank::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-    ControlTurret();
-
-
+    if(GameMode && GameMode->IsGamePlaying())
+    {
+        ControlTurret();
+    }
 }
 
 void APlayableTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

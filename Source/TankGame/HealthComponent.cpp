@@ -39,7 +39,6 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 void UHealthComponent::DamageTaken(AActor* DamagedActor,float Damage,const UDamageType* 
 	DamageType,AController* Instigator,AActor* DamageCauser)
 {
-	UE_LOG(LogTemp,Display,TEXT("sdd"));
 	if(Damage>0)
 	{
 		CurrentHealth-=Damage;

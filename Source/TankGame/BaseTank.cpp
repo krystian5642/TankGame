@@ -49,14 +49,18 @@ ABaseTank::ABaseTank()
 void ABaseTank::BeginPlay()
 {
 	Super::BeginPlay();
-	GetWorldTimerManager().SetTimer(ReloadTimer,this,&ABaseTank::Reload,ReloadingTime,false);
+	GameMode = Cast<AFightAndWinGameMode>(UGameplayStatics::GetGameMode(this));
 }
 
 // Called every frame
 void ABaseTank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	if(GameMode && GameMode->IsGamePlaying() && !StartReload)
+	{
+		GetWorldTimerManager().SetTimer(ReloadTimer,this,&ABaseTank::Reload,ReloadingTime,false);
+		StartReload = true;
+	}
 }
 
 void ABaseTank::RotateWheels(float AxisValue)

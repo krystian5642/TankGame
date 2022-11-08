@@ -20,13 +20,16 @@ void AEnemyTank::BeginPlay()
 void AEnemyTank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-    if(PlayerTank)
+    if(GameMode && GameMode->IsGamePlaying())
     {
-        LookForPlayer();
-    }
-    if(IsPlayerInRange())
-    {
-        Fire();
+        if(PlayerTank)
+        {
+            LookForPlayer();
+        }
+        if(IsPlayerInRange())
+        {
+            Fire();
+        }
     }
 }
 

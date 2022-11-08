@@ -16,6 +16,8 @@ class TANKGAME_API AFightAndWinGameMode : public AGameModeBase
 public:
 	void ActorDeath(AActor* DeadActor);
 
+	inline bool IsGamePlaying()const {return DidGameStart;}
+
 protected:
     // Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -26,14 +28,22 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void GameOver(bool bWonGame);
 
+	void DoStartGameStuff(); //delay time etc.
+
 	ATankGamePlayerController* PlayerController;
+
+	UPROPERTY(EditAnywhere,Category="GameStart")
+	float StartDelay = 2.5f;
+
+	UPROPERTY(VisibleAnywhere,Category="GameStart")
+	bool DidGameStart = false;
 
 private:
 	UPROPERTY(VisibleAnywhere)
 	unsigned int EnemiesNumber = 0;
 
-	void HandleGameStart();
-
 	APlayableTank* Player;
+
+	void SetStartGameState();
 
 };
