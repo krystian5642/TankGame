@@ -7,6 +7,7 @@
 #include "FightAndWinGameMode.generated.h"
 
 class APlayableTank;
+class ATankGamePlayerController;
 
 UCLASS()
 class TANKGAME_API AFightAndWinGameMode : public AGameModeBase
@@ -24,6 +25,8 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void GameOver(bool bWonGame);
+
+	ATankGamePlayerController* PlayerController;
 
 private:
 	UPROPERTY(VisibleAnywhere)

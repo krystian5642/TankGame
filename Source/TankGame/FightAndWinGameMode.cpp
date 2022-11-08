@@ -5,6 +5,7 @@
 #include "PlayableTank.h"
 #include "EnemyTank.h"
 #include "Kismet/GameplayStatics.h"
+#include "TankGamePlayerController.h"
 
 // Called when the game starts or when spawned
 void AFightAndWinGameMode::BeginPlay()
@@ -12,6 +13,7 @@ void AFightAndWinGameMode::BeginPlay()
 	Super::BeginPlay();
     HandleGameStart();
     Player = Cast<APlayableTank>(UGameplayStatics::GetPlayerPawn(this,0));
+    PlayerController = Cast<ATankGamePlayerController>(UGameplayStatics::GetPlayerController(this,0));
 }
 
 void AFightAndWinGameMode::HandleGameStart()
@@ -26,6 +28,10 @@ void AFightAndWinGameMode::ActorDeath(AActor* DeadActor)
     if(DeadActor == Player)
     {
         Player->Death();
+        if(PlayerController)
+        {
+            PlayerController->SetPlayerControllerState(false);
+        }
     }
     else if(AEnemyTank* Enemy  = Cast<AEnemyTank>(DeadActor))
     {
