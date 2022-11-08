@@ -12,6 +12,7 @@
 void AFightAndWinGameMode::BeginPlay()
 {
 	Super::BeginPlay();
+    ShowStartGameWidgets();
     DoStartGameStuff();
 }
 

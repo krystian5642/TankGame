@@ -23,7 +23,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void StartGame();
+	void ShowStartGameWidgets();
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void GameOver(bool bWonGame);
@@ -32,8 +32,8 @@ protected:
 
 	ATankGamePlayerController* PlayerController;
 
-	UPROPERTY(EditAnywhere,Category="GameStart")
-	float StartDelay = 2.5f;
+	UPROPERTY(BlueprintReadOnly,Category="GameStart")
+	float StartDelay = 4.f;
 
 	UPROPERTY(VisibleAnywhere,Category="GameStart")
 	bool DidGameStart = false;
