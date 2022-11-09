@@ -23,20 +23,23 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void ShowStartGameWidgets();
+	void ShowStartGameWidget();
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void GameOver(bool bWonGame);
+	void ShowEndGameWidget(bool bWonGame);
 
 	void DoStartGameStuff(); //delay time etc.
 
 	ATankGamePlayerController* PlayerController;
 
-	UPROPERTY(BlueprintReadOnly,Category="GameStart")
+	UPROPERTY(BlueprintReadOnly,Category="Game")
 	float StartDelay = 4.f;
 
-	UPROPERTY(VisibleAnywhere,Category="GameStart")
+	UPROPERTY(VisibleAnywhere,Category="Game")
 	bool DidGameStart = false;
+
+	UPROPERTY(VisibleAnywhere,Category="Game")
+	bool IsGameOver = false;
 
 private:
 	UPROPERTY(VisibleAnywhere)

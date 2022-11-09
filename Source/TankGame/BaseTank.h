@@ -44,6 +44,11 @@ protected:
 	int MovementDirection  =0;
 
 	AFightAndWinGameMode* GameMode;
+
+	UPROPERTY(VisibleAnywhere,Category="Tank Component");
+	USceneComponent* ProjectileSpawnPoint;
+
+	bool IsAlive  = true;
 	
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -64,9 +69,6 @@ private:
 	UPROPERTY(VisibleAnywhere,Category="Tank Component")
 	UStaticMeshComponent* TurretMesh;
 
-	UPROPERTY(VisibleAnywhere,Category="Tank Component");
-	USceneComponent* ProjectileSpawnPoint;
-
 	UPROPERTY(VisibleAnywhere,Category="Tank Component")
 	UHealthComponent* Health;
 
@@ -86,5 +88,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void Death();
+
+	inline bool IsTankAlive()const{return IsAlive;}
 	
 };

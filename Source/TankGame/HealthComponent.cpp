@@ -42,6 +42,7 @@ void UHealthComponent::DamageTaken(AActor* DamagedActor,float Damage,const UDama
 	if(Damage>0)
 	{
 		CurrentHealth-=Damage;
+		UE_LOG(LogTemp,Display,TEXT("%f"),CurrentHealth);
 		if(CurrentHealth<=0 && GameMode)
 		{
 			GameMode->ActorDeath(DamagedActor);

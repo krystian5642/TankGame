@@ -12,7 +12,7 @@
 void AFightAndWinGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-    ShowStartGameWidgets();
+    ShowStartGameWidget();
     DoStartGameStuff();
 }
 
@@ -62,10 +62,20 @@ void AFightAndWinGameMode::ActorDeath(AActor* DeadActor)
         {
             PlayerController->SetPlayerControllerState(false);
         }
+        if(!IsGameOver)
+        {
+            ShowEndGameWidget(false);
+            IsGameOver = true;
+        }
     }
     else if(AEnemyTank* Enemy  = Cast<AEnemyTank>(DeadActor))
     {
         Enemy->Death();
         EnemiesNumber--;
+        if(EnemiesNumber == 0 && !IsGameOver)
+        {
+            ShowEndGameWidget(true);
+            IsGameOver = true;
+        }
     }
 }

@@ -25,7 +25,7 @@ protected:
 	APlayableTank* PlayerTank;
 
 	UPROPERTY(EditAnywhere,Category="Combat")
-	float TankFireRange =6000; 
+	float TankFireRange =3400; 
 
 	bool IsPlayerInRange();
 

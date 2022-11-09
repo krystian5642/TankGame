@@ -122,4 +122,5 @@ void ABaseTank::Reload()
 void ABaseTank::Death()
 {
 	//sounds and effects
+	IsAlive = false;
 }
